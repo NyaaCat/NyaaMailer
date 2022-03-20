@@ -11,11 +11,10 @@ import org.mockito.Mockito;
 import java.util.logging.Logger;
 
 public class LanguageAdapterTest {
-
-    LanguageAdapter languageAdapter;
+    static LanguageAdapter languageAdapter;
 
     @BeforeAll
-    public void setup(){
+    public static void setup(){
         NyaaMailerPlugin mock = Mockito.mock(NyaaMailerPlugin.class);
         Mockito.when(mock.getLogger()).thenReturn(Logger.getLogger("LanguageAdapterTest"));
         languageAdapter = new LanguageAdapter(MailboxCommonLang.class, mock);

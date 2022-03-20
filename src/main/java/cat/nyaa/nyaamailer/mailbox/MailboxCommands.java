@@ -51,12 +51,12 @@ public class MailboxCommands extends BaseCommand {
             if (sender.hasPermission("nu.mailadmin")) {
                 createMailbox(p, args.nextOfflinePlayer());
             } else {
-                new Message(MailboxLang.getInstance().permissionRequired.produce()).send(sender);
+                sender.sendMessage(MailboxLang.getInstance().permissionRequired.produce());
             }
             return;
         }
         if (plugin.getMailboxLocations().getMailboxLocation(p.getUniqueId()) != null) {
-            new Message(MailboxLang.getInstance().alreadySet.produce()).send(p);
+            p.sendMessage(MailboxLang.getInstance().alreadySet.produce());
             return;
         }
         plugin.getMailboxListener().registerRightClickCallback(p, 100,
@@ -64,18 +64,18 @@ public class MailboxCommands extends BaseCommand {
                     Block b = clickedBlock.getBlock();
                     if (b.getState() instanceof Chest) {
                         plugin.getMailboxLocations().updateLocationMapping(p.getUniqueId(), b.getLocation());
-                        new Message(MailboxLang.getInstance().setSuccess.produce()).send(p);
+                        p.sendMessage(MailboxLang.getInstance().setSuccess.produce());
                         return;
                     }
-                    new Message(MailboxLang.getInstance().setFail.produce()).send(p);
+                    p.sendMessage(MailboxLang.getInstance().setFail.produce());
                 });
-        new Message(MailboxLang.getInstance().nowRightClick.produce()).send(p);
+        p.sendMessage(MailboxLang.getInstance().nowRightClick.produce());
     }
 
     public void createMailbox(Player admin, OfflinePlayer player) {
         UUID id = player.getUniqueId();
         if (plugin.getMailboxLocations().getMailboxLocation(id) != null) {
-            new Message(MailboxLang.getInstance().admin.alreadySet.produce()).send(admin);
+            admin.sendMessage(MailboxLang.getInstance().admin.alreadySet.produce());
             return;
         }
         plugin.getMailboxListener().registerRightClickCallback(admin, 100,
@@ -84,18 +84,18 @@ public class MailboxCommands extends BaseCommand {
                     if (b.getState() instanceof Chest) {
                         plugin.getMailboxLocations().updateNameMapping(id, player.getName());
                         plugin.getMailboxLocations().updateLocationMapping(id, b.getLocation());
-                        new Message(MailboxLang.getInstance().admin.successSet.produce()).send(admin);
+                        admin.sendMessage(MailboxLang.getInstance().admin.successSet.produce());
                         if (player.isOnline()) {
                             Player tmp = plugin.getServer().getPlayer(id);
                             if (tmp != null) {
-                                new Message(MailboxLang.getInstance().admin.playerHintSet.produce()).send(tmp);
+                                tmp.sendMessage(MailboxLang.getInstance().admin.playerHintSet.produce());
                             }
                         }
                         return;
                     }
-                    new Message(MailboxLang.getInstance().admin.failSet.produce()).send(admin);
+                    admin.sendMessage(MailboxLang.getInstance().admin.failSet.produce());
                 });
-        new Message(MailboxLang.getInstance().admin.rightClickSet.produce(Pair.of("name", player.getName()))).send(admin);
+        admin.sendMessage(MailboxLang.getInstance().admin.rightClickSet.produce(Pair.of("name", player.getName())));
     }
 
     @SubCommand(value = "remove", permission = " mailer.command")
@@ -106,27 +106,27 @@ public class MailboxCommands extends BaseCommand {
             if (sender.hasPermission("nu.mailadmin")) {
                 removeMailbox(p, args.nextOfflinePlayer());
             } else {
-                new Message(MailboxLang.getInstance().permissionRequired.produce()).send(sender);
+                sender.sendMessage(MailboxLang.getInstance().permissionRequired.produce());
             }
             return;
         }
         if (plugin.getMailboxLocations().getMailboxLocation(p.getUniqueId()) == null) {
-            new Message(MailboxLang.getInstance().haventSetSelf.produce()).send(p);
+            p.sendMessage(MailboxLang.getInstance().haventSetSelf.produce());
             return;
         }
         plugin.getMailboxLocations().updateLocationMapping(p.getUniqueId(), null);
-        new Message(MailboxLang.getInstance().removeSuccess.produce()).send(p);
+        p.sendMessage(MailboxLang.getInstance().removeSuccess.produce());
     }
 
     public void removeMailbox(Player admin, OfflinePlayer player) {
         if (plugin.getMailboxLocations().getMailboxLocation(player.getUniqueId()) == null) {
-            new Message(MailboxLang.getInstance().admin.noMailbox.produce()).send(admin);
+            admin.sendMessage(MailboxLang.getInstance().admin.noMailbox.produce());
         } else {
             UUID id = player.getUniqueId();
             plugin.getMailboxLocations().updateLocationMapping(id, null);
-            new Message(MailboxLang.getInstance().admin.successRemove.produce()).send(admin);
+            admin.sendMessage(MailboxLang.getInstance().admin.successRemove.produce());
             if (player.isOnline()) {
-                new Message(MailboxLang.getInstance().admin.playerHintRemoved.produce()).send(player.getPlayer());
+                player.getPlayer().sendMessage(MailboxLang.getInstance().admin.playerHintRemoved.produce());
             }
         }
     }
@@ -138,7 +138,7 @@ public class MailboxCommands extends BaseCommand {
             if (sender.hasPermission("nu.mailadmin")) {
                 infoMailbox(sender, args.nextOfflinePlayer());
             } else {
-                new Message(MailboxLang.getInstance().permissionRequired.produce()).send(sender);
+                sender.sendMessage(MailboxLang.getInstance().permissionRequired.produce());
             }
             return;
         }
@@ -146,17 +146,17 @@ public class MailboxCommands extends BaseCommand {
 
         Location loc = plugin.getMailboxLocations().getMailboxLocation(p.getUniqueId());
         if (loc == null) {
-            new Message(MailboxLang.getInstance().haventSetSelf.produce()).send(p);
+            p.sendMessage(MailboxLang.getInstance().haventSetSelf.produce());
         } else {
 
-            new Message(MailboxLang.getInstance().location.produce(
+            p.sendMessage(MailboxLang.getInstance().location.produce(
                     Pair.of("x", loc.getBlockX()),
                     Pair.of("y", loc.getBlockY()),
                     Pair.of("z", loc.getBlockZ())
-            )).send(p);
-            new Message(MailboxLang.getInstance().handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailHandFee)))).send(p);
-            new Message(MailboxLang.getInstance().chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailChestFee)))).send(p);
-            new Message(MailboxLang.getInstance().sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxConfigure().mailCooldown) / 20D)))).send(p);
+            ));
+            p.sendMessage(MailboxLang.getInstance().handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailHandFee))));
+            p.sendMessage(MailboxLang.getInstance().chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailChestFee))));
+            p.sendMessage(MailboxLang.getInstance().sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxConfigure().mailCooldown) / 20D))));
             //new Messagep.send(,); user.mailbox.infosend_timeout", ((double) plugin.getMailboxLocations().mailTimeout) / 20D);
         }
     }
@@ -164,15 +164,15 @@ public class MailboxCommands extends BaseCommand {
     public void infoMailbox(CommandSender admin, OfflinePlayer player) {
         Location loc = plugin.getMailboxLocations().getMailboxLocation(player.getUniqueId());
         if (loc != null) {
-            new Message(MailboxLang.getInstance().admin.info.produce(
+            admin.sendMessage(MailboxLang.getInstance().admin.info.produce(
                     Pair.of("name", player.getName()),
                     Pair.of("uuid", player.getUniqueId().toString()),
                     Pair.of("x", loc.getBlockX()),
                     Pair.of("y", loc.getBlockY()),
                     Pair.of("z", loc.getBlockZ())
-            )).send(admin);
+            ));
         } else {
-            new Message(MailboxLang.getInstance().admin.noMailbox.produce()).send(admin);
+            admin.sendMessage(MailboxLang.getInstance().admin.noMailbox.produce());
         }
     }
 
@@ -181,12 +181,12 @@ public class MailboxCommands extends BaseCommand {
         Player p = asPlayer(sender);
         ItemStack stack = getItemInHand(sender);
         if (args.top() == null) {
-            new Message(MailboxLang.getInstance().common.sendUsage.produce()).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().common.sendUsage.produce());
             return;
         }
 
         if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailHandFee) {
-            new Message(MailboxLang.getInstance().moneyInsufficient.produce()).send(p);
+            p.sendMessage(MailboxLang.getInstance().moneyInsufficient.produce());
             return;
         }
         OfflinePlayer toPlayer = args.nextOfflinePlayer();
@@ -203,12 +203,12 @@ public class MailboxCommands extends BaseCommand {
         }
 
         if (recipient == null) {
-            new Message(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName()))).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName())));
             return;
         } else if (toLocation == null) {
-            new Message(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName()))).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName())));
             if (toPlayer.isOnline()) {
-                new Message(MailboxLang.getInstance().createMailboxHint.produce(Pair.of("name", sender.getName()))).send(toPlayer.getPlayer());
+                toPlayer.getPlayer().sendMessage(MailboxLang.getInstance().createMailboxHint.produce(Pair.of("name", sender.getName())));
             }
             return;
         }
@@ -217,21 +217,21 @@ public class MailboxCommands extends BaseCommand {
         if (toPlayer.isOnline()) recp = (Player) toPlayer;
         Inventory targetInventory = ((InventoryHolder) toLocation.getBlock().getState()).getInventory();
         if (!InventoryUtils.hasEnoughSpace(targetInventory, stack)) {
-            new Message(MailboxLang.getInstance().recipientNoSpace.produce()).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().recipientNoSpace.produce());
             if (recp != null) {
-                new Message(MailboxLang.getInstance().mailboxNoSpace.produce(Pair.of("name", sender.getName()))).send(recp);
+                recp.sendMessage(MailboxLang.getInstance().mailboxNoSpace.produce(Pair.of("name", sender.getName())));
             }
         } else {
             economyCore.depositSystemVault(plugin.getMailboxConfigure().mailHandFee);
 
             InventoryUtils.addItem(targetInventory, stack);
             p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-            new Message(MailboxLang.getInstance().mailSent.produce(
+            sender.sendMessage(MailboxLang.getInstance().mailSent.produce(
                     Pair.of("name", toPlayer.getName()),
                     Pair.of("mailChestFee", plugin.getMailboxConfigure().mailHandFee))
-            ).send(sender);
+            );
             if (recp != null) {
-                new Message(MailboxLang.getInstance().mailReceived.produce(Pair.of("name", sender.getName()))).send(recp);
+                recp.sendMessage(MailboxLang.getInstance().mailReceived.produce(Pair.of("name", sender.getName())));
             }
             economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxConfigure().mailHandFee);
         }
@@ -241,12 +241,12 @@ public class MailboxCommands extends BaseCommand {
     public void sendBoxMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         if (args.top() == null) {
-            new Message(MailboxLang.getInstance().common.sendchestUsage.produce()).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().common.sendchestUsage.produce());
             return;
         }
 
         if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailChestFee) {
-            new Message(MailboxLang.getInstance().moneyInsufficient.produce()).send(p);
+            p.sendMessage(MailboxLang.getInstance().moneyInsufficient.produce());
             return;
         }
         OfflinePlayer toPlayer = args.nextOfflinePlayer();
@@ -263,12 +263,12 @@ public class MailboxCommands extends BaseCommand {
         }
 
         if (recipient == null) {
-            new Message(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName()))).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName())));
             return;
         } else if (toLocation == null) {
-            new Message(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName()))).send(sender);
+            sender.sendMessage(MailboxLang.getInstance().playerNoMailbox.produce(Pair.of("name", toPlayer.getName())));
             if (toPlayer.isOnline()) {
-                new Message(MailboxLang.getInstance().createMailboxHint.produce(Pair.of("name", sender.getName()))).send(toPlayer.getPlayer());
+                sender.sendMessage(MailboxLang.getInstance().createMailboxHint.produce(Pair.of("name", sender.getName())));
             }
             return;
         }
@@ -281,13 +281,13 @@ public class MailboxCommands extends BaseCommand {
         plugin.getMailboxListener().registerRightClickCallback(p, 100,
                 (Location boxLocation) -> {
                     if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailChestFee) {
-                        new Message(MailboxLang.getInstance().moneyInsufficient.produce()).send(p);
+                        p.sendMessage(MailboxLang.getInstance().moneyInsufficient.produce());
                         return;
                     }
                     Block b = boxLocation.getBlock();
                     if (plugin.getServer().getPluginManager().getPlugin("LockettePro") != null) {
                         if (LocketteProAPI.isLocked(b) && !LocketteProAPI.isUser(b, p)) {
-                            new Message(MailboxLang.getInstance().chestProtected.produce()).send(p);
+                            p.sendMessage(MailboxLang.getInstance().chestProtected.produce());
                             return;
                         }
                     }
@@ -306,9 +306,9 @@ public class MailboxCommands extends BaseCommand {
                                 nextSlot++;
                             }
                             if (nextSlot >= to.length) {
-                                new Message(MailboxLang.getInstance().recipientNoSpace.produce()).send(sender);
+                                sender.sendMessage(MailboxLang.getInstance().recipientNoSpace.produce());
                                 if (recpFinal != null) {
-                                    new Message(MailboxLang.getInstance().mailboxNoSpace.produce(Pair.of("name", sender.getName()))).send(recpFinal);
+                                    recpFinal.sendMessage(MailboxLang.getInstance().mailboxNoSpace.produce(Pair.of("name", sender.getName())));
                                 }
                                 fromInventory.setStorageContents(fromBefore);
                                 return;
@@ -322,19 +322,19 @@ public class MailboxCommands extends BaseCommand {
                         economyCore.depositSystemVault(plugin.getMailboxConfigure().mailChestFee);
 
                         toInventory.setStorageContents(to);
-                        new Message(MailboxLang.getInstance().mailSent.produce(
+                        sender.sendMessage(MailboxLang.getInstance().mailSent.produce(
                                 Pair.of("name", toPlayer.getName()),
                                 Pair.of("mailChestFee", plugin.getMailboxConfigure().mailChestFee)
-                        )).send(sender);
+                        ));
                         if (recpFinal != null) {
-                            new Message(MailboxLang.getInstance().mailReceived.produce(Pair.of("name", sender.getName()))).send(recpFinal);
+                            recpFinal.sendMessage(MailboxLang.getInstance().mailReceived.produce(Pair.of("name", sender.getName())));
                         }
                         economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxConfigure().mailChestFee);
                     } else {
-                        new Message(MailboxLang.getInstance().mailSentNothing.produce()).send(sender);
+                        sender.sendMessage(MailboxLang.getInstance().mailSentNothing.produce());
                     }
                 });
-        new Message(MailboxLang.getInstance().nowRightClickSend.produce(Pair.of("name", toPlayer.getName()))).send(p);
+        p.sendMessage(MailboxLang.getInstance().nowRightClickSend.produce(Pair.of("name", toPlayer.getName())));
     }
 
     @SubCommand(value = "reload", permission = "mailer.admin")

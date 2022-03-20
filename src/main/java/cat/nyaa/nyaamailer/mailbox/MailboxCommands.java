@@ -345,6 +345,7 @@ public class MailboxCommands extends CommandReceiver {
 
     @Override
     public void msg(CommandSender target, String template, Object... args) {
-        return ;
+        new Message(String.format(languageAdapter.convert(MailboxLang.getInstance().common, template).produce(), args))
+                .send(target);
     }
 }

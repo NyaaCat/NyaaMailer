@@ -28,16 +28,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class MailboxCommands extends CommandReceiver {
+public class MailboxCommands extends BaseCommand {
     private final NyaaMailerPlugin plugin;
     private final EconomyCore economyCore;
-    private final LanguageAdapter languageAdapter;
 
     public MailboxCommands(Object plugin, LanguageRepository i18n) {
         super((NyaaMailerPlugin) plugin, i18n);
         this.plugin = (NyaaMailerPlugin) plugin;
         this.economyCore = ((NyaaMailerPlugin) plugin).getServer().getServicesManager().getRegistration(EconomyCore.class).getProvider();
-        languageAdapter = new LanguageAdapter(MailboxCommonLang.class, this.plugin);
     }
 
     @Override
@@ -345,13 +343,4 @@ public class MailboxCommands extends CommandReceiver {
     }
 
 
-    @Override
-    public void msg(CommandSender target, String template, Object... args) {
-        Text convert = languageAdapter.convert(MailboxLang.getInstance().common, template);
-        if (convert == null){
-            throw new BadCommandException();
-        }
-        new Message(String.format(convert.produce(), args))
-                .send(target);
-    }
 }

@@ -1,10 +1,12 @@
 package cat.nyaa.nyaamailer;
 
+import cat.nyaa.nyaamailer.lang.MailboxCommonLang;
 import cat.nyaa.nyaamailer.lang.MailboxLang;
 import cat.nyaa.nyaamailer.mailbox.MailboxCommands;
 import cat.nyaa.nyaamailer.mailbox.MailboxConfigure;
 import cat.nyaa.nyaamailer.mailbox.MailboxListener;
 import cat.nyaa.nyaamailer.mailbox.MailboxLocations;
+import cat.nyaa.nyaamailer.support.LanguageAdapter;
 import com.google.gson.GsonBuilder;
 import land.melon.lab.simplelanguageloader.SimpleLanguageLoader;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +23,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
     // dummy that makes cmdReceiver happy
     I18n i18n;
     File languageFile = new File(getDataFolder(), "language.json");
+    private LanguageAdapter adapter;
 
 
     @Override
@@ -34,7 +37,8 @@ public class NyaaMailerPlugin extends JavaPlugin {
             mailboxLocations = new MailboxLocations(this);
             mailboxLocations.load();
             mailboxListener = new MailboxListener(this);
-            i18n = new I18n(this);
+            adapter = new LanguageAdapter(MailboxCommonLang.class, this);
+            i18n = new I18n(this, adapter);
             mailboxCommands = new MailboxCommands(this, i18n);
             mailboxConfigure = new MailboxConfigure(this);
             mailboxConfigure.load();
@@ -58,5 +62,9 @@ public class NyaaMailerPlugin extends JavaPlugin {
 
     public MailboxConfigure getMailboxConfigure() {
         return mailboxConfigure;
+    }
+
+    public LanguageAdapter getAdapter() {
+        return adapter;
     }
 }

@@ -18,6 +18,8 @@ ext.buildNumber = System.env.BUILD_NUMBER == null ? "x"                : "$Syste
 ext.mavenDirectory = System.env.MAVEN_DIR == null ? "$projectDir/repo" : "$System.env.MAVEN_DIR"
 ext.jdDirectory = System.env.JAVADOCS_DIR == null ? null               : "$System.env.JAVADOCS_DIR"
 
+group = "cat.nyaa"
+archivesBaseName = "${pluginNameUpper}-mc$minecraftVersion"
 version = "$majorVersion.$minorVersion.$buildNumber"
 
 repositories {
@@ -72,6 +74,26 @@ task sourcesJar(type: Jar) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     archiveClassifier.set("javadoc")
     from javadoc.destinationDir
+}
+
+// compile options
+compileJava {
+    options.encoding("UTF-8")
+}
+
+javadoc {
+    options {
+        locale 'en_US'
+        encoding 'UTF-8'
+        docEncoding 'UTF-8'
+
+        if (JavaVersion.current() > JavaVersion.VERSION_1_9) {
+            addBooleanOption('html5', true)
+        }
+    }
+
+
+
 }
 
 // maven publish

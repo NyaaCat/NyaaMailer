@@ -22,6 +22,6 @@ public class MailboxConfigure extends PluginConfigure {
 
     @Override
     protected JavaPlugin getPlugin() {
-        return null;
+        return plugin;
     }
 }

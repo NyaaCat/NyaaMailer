@@ -16,10 +16,11 @@ public class MailboxLang {
         return INSTANCE;
     }
 
-    public static MailboxLang newInstance(){
-        INSTANCE = new MailboxLang();
+    public synchronized static MailboxLang setInstance(MailboxLang instance){
+        INSTANCE = instance;
         return INSTANCE;
     }
+
 
     public Text rightClickTimeout = Text.of( "指定时间内未设置要作为邮箱的箱子，操作已取消。");
     public Text alreadySet = Text.of( "设置新邮箱前，请撤销当前已设置过的邮箱。");

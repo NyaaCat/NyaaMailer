@@ -39,7 +39,7 @@ public class MailboxCommands extends CommandReceiver {
         return "mailbox";
     }
 
-    @SubCommand(value = "create", permission = "nu.mailbox")
+    @SubCommand(value = "create", permission = " mailer.command")
     public void createMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         String tmp = args.top();
@@ -94,7 +94,7 @@ public class MailboxCommands extends CommandReceiver {
         new Message(MailboxLang.getInstance().admin.rightClickSet.produce(Pair.of("name", player.getName()))).send(admin);
     }
 
-    @SubCommand(value = "remove", permission = "nu.mailbox")
+    @SubCommand(value = "remove", permission = " mailer.command")
     public void removeMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         String tmp = args.top();
@@ -127,7 +127,7 @@ public class MailboxCommands extends CommandReceiver {
         }
     }
 
-    @SubCommand(value = "info", permission = "nu.mailbox")
+    @SubCommand(value = "info", permission = " mailer.command")
     public void infoMailbox(CommandSender sender, Arguments args) {
         String tmp = args.top();
         if (tmp != null) {
@@ -172,7 +172,7 @@ public class MailboxCommands extends CommandReceiver {
         }
     }
 
-    @SubCommand(value = "send", permission = "nu.mailbox")
+    @SubCommand(value = "send", permission = " mailer.command")
     public void sendMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         ItemStack stack = getItemInHand(sender);
@@ -233,7 +233,7 @@ public class MailboxCommands extends CommandReceiver {
         }
     }
 
-    @SubCommand(value = "sendchest", permission = "nu.mailbox")
+    @SubCommand(value = "sendchest", permission = " mailer.command")
     public void sendBoxMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         if (args.top() == null) {
@@ -331,5 +331,10 @@ public class MailboxCommands extends CommandReceiver {
                     }
                 });
         new Message(MailboxLang.getInstance().nowRightClickSend.produce(Pair.of("name", toPlayer.getName()))).send(p);
+    }
+
+    @SubCommand(value = "reload", permission = "mailer.admin")
+    public void reload(CommandSender sender, Arguments args) {
+        plugin.reload();
     }
 }

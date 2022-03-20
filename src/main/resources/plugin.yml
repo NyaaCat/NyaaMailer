@@ -17,3 +17,6 @@ permissions:
   mailer.command:
     description: Base permission node for commands
     default: true
+  mailer.admin:
+    description: admin permission node for commands
+    default: op

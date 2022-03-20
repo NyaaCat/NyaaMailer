@@ -30,7 +30,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
 
     }
 
-    private void reload() {
+    public void reload() {
         try {
             mailboxLocations = new MailboxLocations(this);
             mailboxLocations.load();

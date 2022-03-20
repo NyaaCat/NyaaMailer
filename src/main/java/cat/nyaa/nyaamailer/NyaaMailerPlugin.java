@@ -23,7 +23,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
         mailboxLocations = new MailboxLocations(this);
         mailboxLocations.load();
         mailboxListener = new MailboxListener(this);
-        i18n = new I18n();
+        i18n = new I18n(this);
         mailboxCommands = new MailboxCommands(this, i18n);
 
         this.getServer().getPluginManager().registerEvents(mailboxListener, this);

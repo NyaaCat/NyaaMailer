@@ -1,7 +1,6 @@
 package cat.nyaa.nyaamailer.mailbox;
 
 import cat.nyaa.nyaacore.ILocalizer;
-import cat.nyaa.nyaacore.Message;
 import cat.nyaa.nyaacore.cmdreceiver.BadCommandException;
 import cat.nyaa.nyaacore.cmdreceiver.CommandReceiver;
 import cat.nyaa.nyaamailer.NyaaMailerPlugin;
@@ -27,7 +26,6 @@ public abstract class BaseCommand extends CommandReceiver {
         if (convert == null){
             throw new BadCommandException();
         }
-        new Message(String.format(convert.produce(), args))
-                .send(target);
+        target.sendMessage(String.format(convert.produce(), args));
     }
 }

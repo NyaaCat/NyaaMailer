@@ -2,17 +2,11 @@ package cat.nyaa.nyaamailer.mailbox;
 
 import cat.nyaa.ecore.EconomyCore;
 import cat.nyaa.nyaacore.LanguageRepository;
-import cat.nyaa.nyaacore.Message;
 import cat.nyaa.nyaacore.cmdreceiver.Arguments;
-import cat.nyaa.nyaacore.cmdreceiver.BadCommandException;
-import cat.nyaa.nyaacore.cmdreceiver.CommandReceiver;
 import cat.nyaa.nyaacore.cmdreceiver.SubCommand;
 import cat.nyaa.nyaacore.utils.InventoryUtils;
 import cat.nyaa.nyaamailer.NyaaMailerPlugin;
 import cat.nyaa.nyaamailer.lang.MailboxLang;
-import cat.nyaa.nyaamailer.lang.MailboxCommonLang;
-import cat.nyaa.nyaamailer.support.LanguageAdapter;
-import land.melon.lab.simplelanguageloader.components.Text;
 import land.melon.lab.simplelanguageloader.utils.Pair;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import org.bukkit.Location;
@@ -157,7 +151,6 @@ public class MailboxCommands extends BaseCommand {
             p.sendMessage(MailboxLang.getInstance().handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailHandFee))));
             p.sendMessage(MailboxLang.getInstance().chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailChestFee))));
             p.sendMessage(MailboxLang.getInstance().sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxConfigure().mailCooldown) / 20D))));
-            //new Messagep.send(,); user.mailbox.infosend_timeout", ((double) plugin.getMailboxLocations().mailTimeout) / 20D);
         }
     }
 

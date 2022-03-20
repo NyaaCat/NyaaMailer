@@ -27,6 +27,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
         mailboxCommands = new MailboxCommands(this, i18n);
 
         this.getServer().getPluginManager().registerEvents(mailboxListener, this);
+        getCommand("mailer").setExecutor(mailboxCommands);
 
     }
 

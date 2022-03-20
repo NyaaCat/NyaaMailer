@@ -60,7 +60,7 @@ public class MailboxListener implements Listener {
             public void run() {
                 callbackMap.remove(p);
                 if (p.isOnline()) {
-                    p.sendMessage(MailboxLang.rightClickTimeout.produce());
+                    p.sendMessage(MailboxLang.getInstance().rightClickTimeout.produce());
                 }
             }
         };

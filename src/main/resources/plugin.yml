@@ -1,0 +1,19 @@
+name: NyaaMailer
+main: cat.nyaa.nyaamailer.NyaaMailerPlugin
+description: "send mail across players"
+version: ${version}
+depend: [WorldEdit,NyaaCore, LockettePro]
+authors: [ReinWD]
+website: "https://github.com/NyaaCat/NyaaMailer"
+api-version: 1.18
+commands:
+  mailer:
+    description: The command for NyaaMailer
+    permission: mailer.command
+    permission-message: "You do not have the required permission: <permission>"
+    usage: "/<command> [SubCommand...] [Arguments...] or /<command> help"
+
+permissions:
+  mailer.command:
+    description: Base permission node for commands
+    default: true

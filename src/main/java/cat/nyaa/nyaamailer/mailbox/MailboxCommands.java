@@ -9,7 +9,6 @@ import cat.nyaa.nyaacore.cmdreceiver.SubCommand;
 import cat.nyaa.nyaacore.utils.InventoryUtils;
 import cat.nyaa.nyaamailer.NyaaMailerPlugin;
 import cat.nyaa.nyaamailer.lang.MailboxLang;
-import cat.nyaa.nyaamailer.lang.MailboxLang;
 import land.melon.lab.simplelanguageloader.utils.Pair;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import org.bukkit.Location;

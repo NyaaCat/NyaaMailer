@@ -42,7 +42,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
 
             this.getServer().getPluginManager().registerEvents(mailboxListener, this);
             getCommand("mailer").setExecutor(mailboxCommands);
-            new SimpleLanguageLoader(new GsonBuilder()).loadOrInitialize(languageFile, MailboxLang.class, MailboxLang::getInstance);
+            new SimpleLanguageLoader().loadOrInitialize(languageFile, MailboxLang.class, MailboxLang::getInstance);
         } catch (IOException e) {
             throw new RuntimeException("error loading config.", e);
         }

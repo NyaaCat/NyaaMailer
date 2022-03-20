@@ -1,0 +1,15 @@
+name: NyaaMailer
+version: '${project.version}'
+main: cat.nyaa.mailer.NyaaMailer
+api-version: 1.18
+authors: [ metadevs ]
+description: Express Delivery for the server
+depend:
+  - LockettePro
+  - WorldGuard
+  - Vault
+libraries:
+  - org.xerial:sqlite-jdbc:3.36.0.3
+commands:
+  mailer:
+    description: NyaaMailer main command

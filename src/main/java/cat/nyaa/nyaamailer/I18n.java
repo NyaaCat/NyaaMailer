@@ -15,6 +15,6 @@ public class I18n extends LanguageRepository {
 
     @Override
     protected String getLanguage() {
-        return "zh_CN";
+        return "en_US";
     }
 }

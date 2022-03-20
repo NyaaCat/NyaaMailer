@@ -16,6 +16,11 @@ public class MailboxLang {
         return INSTANCE;
     }
 
+    public static MailboxLang newInstance(){
+        INSTANCE = new MailboxLang();
+        return INSTANCE;
+    }
+
     public Text rightClickTimeout = Text.of( "指定时间内未设置要作为邮箱的箱子，操作已取消。");
     public Text alreadySet = Text.of( "设置新邮箱前，请撤销当前已设置过的邮箱。");
     public Text haventSetSelf = Text.of( "你还没有邮箱。");
@@ -47,6 +52,6 @@ public class MailboxLang {
     public Text mailSentNothing = Text.of("邮递小哥慨而慷，免费为你发空箱。");
     public Text moneyInsufficient = Text.of("你没有足够的现金来发送邮件。");
     public MailBoxAdminLang admin = new MailBoxAdminLang();
-    public MailboxUsageLang usage = new MailboxUsageLang();
+    public MailboxCommonLang common = new MailboxCommonLang();
 
 }

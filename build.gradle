@@ -55,6 +55,10 @@ dependencies {
         exclude group: 'org.bukkit', module: 'bukkit'
         exclude group: 'com.destroystokyo.paper', module: 'paper-api'
     }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.mockito:mockito-all:2.0.0-beta'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
 
 // source file modification (modify version string)

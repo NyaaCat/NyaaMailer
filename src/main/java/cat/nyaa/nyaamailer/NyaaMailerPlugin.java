@@ -26,8 +26,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-            this.reload();
-
+        this.reload();
     }
 
     public void reload() {
@@ -42,7 +41,7 @@ public class NyaaMailerPlugin extends JavaPlugin {
 
             this.getServer().getPluginManager().registerEvents(mailboxListener, this);
             getCommand("mailer").setExecutor(mailboxCommands);
-            new SimpleLanguageLoader().loadOrInitialize(languageFile, MailboxLang.class, MailboxLang::getInstance);
+            new SimpleLanguageLoader().loadOrInitialize(languageFile, MailboxLang.class, MailboxLang::newInstance);
         } catch (IOException e) {
             throw new RuntimeException("error loading config.", e);
         }

@@ -9,6 +9,8 @@ import cat.nyaa.nyaacore.cmdreceiver.SubCommand;
 import cat.nyaa.nyaacore.utils.InventoryUtils;
 import cat.nyaa.nyaamailer.NyaaMailerPlugin;
 import cat.nyaa.nyaamailer.lang.MailboxLang;
+import cat.nyaa.nyaamailer.lang.MailboxCommonLang;
+import cat.nyaa.nyaamailer.support.LanguageAdapter;
 import land.melon.lab.simplelanguageloader.utils.Pair;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import org.bukkit.Location;
@@ -27,11 +29,13 @@ import java.util.UUID;
 public class MailboxCommands extends CommandReceiver {
     private final NyaaMailerPlugin plugin;
     private final EconomyCore economyCore;
+    private final LanguageAdapter languageAdapter;
 
     public MailboxCommands(Object plugin, LanguageRepository i18n) {
         super((NyaaMailerPlugin) plugin, i18n);
         this.plugin = (NyaaMailerPlugin) plugin;
         this.economyCore = ((NyaaMailerPlugin) plugin).getServer().getServicesManager().getRegistration(EconomyCore.class).getProvider();
+        languageAdapter = new LanguageAdapter(MailboxCommonLang.class, this.plugin);
     }
 
     @Override
@@ -177,7 +181,7 @@ public class MailboxCommands extends CommandReceiver {
         Player p = asPlayer(sender);
         ItemStack stack = getItemInHand(sender);
         if (args.top() == null) {
-            new Message(MailboxLang.getInstance().usage.sendUsage.produce()).send(sender);
+            new Message(MailboxLang.getInstance().common.sendUsage.produce()).send(sender);
             return;
         }
 
@@ -237,7 +241,7 @@ public class MailboxCommands extends CommandReceiver {
     public void sendBoxMailbox(CommandSender sender, Arguments args) {
         Player p = asPlayer(sender);
         if (args.top() == null) {
-            new Message(MailboxLang.getInstance().usage.sendchestUsage.produce()).send(sender);
+            new Message(MailboxLang.getInstance().common.sendchestUsage.produce()).send(sender);
             return;
         }
 
@@ -336,5 +340,11 @@ public class MailboxCommands extends CommandReceiver {
     @SubCommand(value = "reload", permission = "mailer.admin")
     public void reload(CommandSender sender, Arguments args) {
         plugin.reload();
+    }
+
+
+    @Override
+    public void msg(CommandSender target, String template, Object... args) {
+        return ;
     }
 }

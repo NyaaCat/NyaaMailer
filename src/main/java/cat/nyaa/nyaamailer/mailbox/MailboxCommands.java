@@ -150,9 +150,9 @@ public class MailboxCommands extends CommandReceiver {
                     Pair.of("y", loc.getBlockY()),
                     Pair.of("z", loc.getBlockZ())
             )).send(p);
-            new Message(MailboxLang.handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxLocations().mailHandFee)))).send(p);
-            new Message(MailboxLang.chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxLocations().mailChestFee)))).send(p);
-            new Message(MailboxLang.sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxLocations().mailCooldown) / 20D)))).send(p);
+            new Message(MailboxLang.handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailHandFee)))).send(p);
+            new Message(MailboxLang.chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxConfigure().mailChestFee)))).send(p);
+            new Message(MailboxLang.sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxConfigure().mailCooldown) / 20D)))).send(p);
             //new Messagep.send(,); user.mailbox.infosend_timeout", ((double) plugin.getMailboxLocations().mailTimeout) / 20D);
         }
     }
@@ -181,7 +181,7 @@ public class MailboxCommands extends CommandReceiver {
             return;
         }
 
-        if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxLocations().mailHandFee) {
+        if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailHandFee) {
             new Message(MailboxLang.moneyInsufficient.produce()).send(p);
             return;
         }
@@ -218,18 +218,18 @@ public class MailboxCommands extends CommandReceiver {
                 new Message(MailboxLang.mailboxNoSpace.produce(Pair.of("name", sender.getName()))).send(recp);
             }
         } else {
-            economyCore.depositSystemVault(plugin.getMailboxLocations().mailHandFee);
+            economyCore.depositSystemVault(plugin.getMailboxConfigure().mailHandFee);
 
             InventoryUtils.addItem(targetInventory, stack);
             p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
             new Message(MailboxLang.mailSent.produce(
                     Pair.of("name", toPlayer.getName()),
-                    Pair.of("mailChestFee", plugin.getMailboxLocations().mailHandFee))
+                    Pair.of("mailChestFee", plugin.getMailboxConfigure().mailHandFee))
             ).send(sender);
             if (recp != null) {
                 new Message(MailboxLang.mailReceived.produce(Pair.of("name", sender.getName()))).send(recp);
             }
-            economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxLocations().mailHandFee);
+            economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxConfigure().mailHandFee);
         }
     }
 
@@ -241,7 +241,7 @@ public class MailboxCommands extends CommandReceiver {
             return;
         }
 
-        if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxLocations().mailChestFee) {
+        if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailChestFee) {
             new Message(MailboxLang.moneyInsufficient.produce()).send(p);
             return;
         }
@@ -276,7 +276,7 @@ public class MailboxCommands extends CommandReceiver {
 
         plugin.getMailboxListener().registerRightClickCallback(p, 100,
                 (Location boxLocation) -> {
-                    if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxLocations().mailChestFee) {
+                    if (economyCore.getPlayerBalance(p.getUniqueId()) < plugin.getMailboxConfigure().mailChestFee) {
                         new Message(MailboxLang.moneyInsufficient.produce()).send(p);
                         return;
                     }
@@ -315,17 +315,17 @@ public class MailboxCommands extends CommandReceiver {
                         }
                     }
                     if (itemMoved) {
-                        economyCore.depositSystemVault(plugin.getMailboxLocations().mailChestFee);
+                        economyCore.depositSystemVault(plugin.getMailboxConfigure().mailChestFee);
 
                         toInventory.setStorageContents(to);
                         new Message(MailboxLang.mailSent.produce(
                                 Pair.of("name", toPlayer.getName()),
-                                Pair.of("mailChestFee", plugin.getMailboxLocations().mailChestFee)
+                                Pair.of("mailChestFee", plugin.getMailboxConfigure().mailChestFee)
                         )).send(sender);
                         if (recpFinal != null) {
                             new Message(MailboxLang.mailReceived.produce(Pair.of("name", sender.getName()))).send(recpFinal);
                         }
-                        economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxLocations().mailChestFee);
+                        economyCore.withdrawPlayer(p.getUniqueId(), plugin.getMailboxConfigure().mailChestFee);
                     } else {
                         new Message(MailboxLang.mailSentNothing.produce()).send(sender);
                     }

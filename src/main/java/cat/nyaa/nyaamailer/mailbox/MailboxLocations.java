@@ -24,16 +24,6 @@ public class MailboxLocations extends FileConfigure {
     private final BiMap<UUID, String> nameMap = HashBiMap.create();
     private final Map<UUID, Location> locationMap = new HashMap<>();
 
-    /* Mailing System */
-    @Serializable(name = "mail.handFee")
-    public int mailHandFee = 10;
-    @Serializable(name = "mail.chestFee")
-    public int mailChestFee = 1000;
-    @Serializable(name = "mail.cooldownTicks")
-    public int mailCooldown = 20;
-    @Serializable(name = "mail.timeoutTicks")
-    public int mailTimeout = 200;
-
     public MailboxLocations(NyaaMailerPlugin plugin) {
         this.plugin = plugin;
     }

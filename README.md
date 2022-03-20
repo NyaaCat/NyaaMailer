@@ -1,0 +1,2 @@
+# NyaaMailer
+Mailer for players

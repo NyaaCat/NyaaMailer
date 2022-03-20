@@ -6,7 +6,7 @@ public class MailboxLang {
     public static Text rightClickTimeout = Text.of( "指定时间内未设置要作为邮箱的箱子，操作已取消。");
     public static Text alreadySet = Text.of( "设置新邮箱前，请撤销当前已设置过的邮箱。");
     public static Text haventSetSelf = Text.of( "你还没有邮箱。");
-    public static Text haventSetOther = Text.of( "玩家 %s 尚未设置邮箱");
+    public static Text haventSetOther = Text.of( "玩家 {name} 尚未设置邮箱");
     public static Text setSuccess = Text.of( "设置邮箱成功。");
     public static Text setFail = Text.of( "设置邮箱失败。");
     public static Text removeSuccess = Text.of( "撤销邮箱成功。");

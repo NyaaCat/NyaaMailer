@@ -150,8 +150,8 @@ public class MailboxCommands extends CommandReceiver {
                     Pair.of("y", loc.getBlockY()),
                     Pair.of("z", loc.getBlockZ())
             )).send(p);
-            new Message(MailboxLang.handPrice.produce(Pair.of("fee", String.format("%.2f", plugin.getMailboxLocations().mailHandFee)))).send(p);
-            new Message(MailboxLang.chestPrice.produce(Pair.of("fee", String.format("%.2f", plugin.getMailboxLocations().mailChestFee)))).send(p);
+            new Message(MailboxLang.handPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxLocations().mailHandFee)))).send(p);
+            new Message(MailboxLang.chestPrice.produce(Pair.of("fee", String.format("%.2f", (double) plugin.getMailboxLocations().mailChestFee)))).send(p);
             new Message(MailboxLang.sendCooldown.produce(Pair.of("cooldown", String.format("%.2f", ((double) plugin.getMailboxLocations().mailCooldown) / 20D)))).send(p);
             //new Messagep.send(,); user.mailbox.infosend_timeout", ((double) plugin.getMailboxLocations().mailTimeout) / 20D);
         }
@@ -224,7 +224,7 @@ public class MailboxCommands extends CommandReceiver {
             p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
             new Message(MailboxLang.mailSent.produce(
                     Pair.of("name", toPlayer.getName()),
-                    Pair.of("fee", plugin.getMailboxLocations().mailHandFee))
+                    Pair.of("mailChestFee", plugin.getMailboxLocations().mailHandFee))
             ).send(sender);
             if (recp != null) {
                 new Message(MailboxLang.mailReceived.produce(Pair.of("name", sender.getName()))).send(recp);

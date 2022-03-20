@@ -4,13 +4,17 @@ import cat.nyaa.nyaacore.LanguageRepository;
 import org.bukkit.plugin.Plugin;
 
 public class I18n extends LanguageRepository {
+    Plugin plugin;
+    public I18n(NyaaMailerPlugin plugin){
+        this.plugin = plugin;
+    }
     @Override
     protected Plugin getPlugin() {
-        return null;
+        return plugin;
     }
 
     @Override
     protected String getLanguage() {
-        return null;
+        return "zh_CN";
     }
 }

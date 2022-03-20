@@ -4,6 +4,7 @@ import cat.nyaa.ecore.EconomyCore;
 import cat.nyaa.nyaacore.LanguageRepository;
 import cat.nyaa.nyaacore.Message;
 import cat.nyaa.nyaacore.cmdreceiver.Arguments;
+import cat.nyaa.nyaacore.cmdreceiver.BadCommandException;
 import cat.nyaa.nyaacore.cmdreceiver.CommandReceiver;
 import cat.nyaa.nyaacore.cmdreceiver.SubCommand;
 import cat.nyaa.nyaacore.utils.InventoryUtils;
@@ -11,6 +12,7 @@ import cat.nyaa.nyaamailer.NyaaMailerPlugin;
 import cat.nyaa.nyaamailer.lang.MailboxLang;
 import cat.nyaa.nyaamailer.lang.MailboxCommonLang;
 import cat.nyaa.nyaamailer.support.LanguageAdapter;
+import land.melon.lab.simplelanguageloader.components.Text;
 import land.melon.lab.simplelanguageloader.utils.Pair;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import org.bukkit.Location;
@@ -345,7 +347,11 @@ public class MailboxCommands extends CommandReceiver {
 
     @Override
     public void msg(CommandSender target, String template, Object... args) {
-        new Message(String.format(languageAdapter.convert(MailboxLang.getInstance().common, template).produce(), args))
+        Text convert = languageAdapter.convert(MailboxLang.getInstance().common, template);
+        if (convert == null){
+            throw new BadCommandException();
+        }
+        new Message(String.format(convert.produce(), args))
                 .send(target);
     }
 }
